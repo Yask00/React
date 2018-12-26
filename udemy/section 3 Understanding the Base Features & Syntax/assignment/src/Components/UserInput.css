@@ -1,0 +1,8 @@
+.user-input input {
+    margin: 10px auto;
+    padding: 5px;
+    border: 1px solid goldenrod;
+    border-radius: 5px;
+    text-align: center;
+    display: block;
+}
