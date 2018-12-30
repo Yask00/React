@@ -1,0 +1,17 @@
+class FancyButton extends React.Component {
+    focus() {
+      // ...
+    }
+  
+    // ...
+  }
+  
+  // Use context to pass the current "theme" to FancyButton.
+  // Use forwardRef to pass refs to FancyButton as well.
+  export default React.forwardRef((props, ref) => (
+    <ThemeContext.Consumer>
+      {theme => (
+        <FancyButton {...props} theme={theme} ref={ref} />
+      )}
+    </ThemeContext.Consumer>
+  ));
