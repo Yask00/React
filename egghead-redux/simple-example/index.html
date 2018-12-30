@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.0/redux.js"></script>
+</head>
+<body>
+    <!-- CHECK IN CONSOLE -->
+    <script>
+        const counter = (state =0, action) => {
+            switch (action.type) {
+                case 'INCREMENT': return state + 1; break;
+                case 'DECREMENT': return state - 1; break;
+                default: return state; break;
+            }
+        }
+
+        const { createStore } = Redux;
+        const store = createStore(counter);
+        // store binds together the three principles of redux
+        // 1. it holds current state object, 
+        // 2. let you dispatch actions, 
+        // 3. specify reducer tells how state is updated w actions
+
+        console.log(store.getState());
+        store.dispatch({ type: 'INCREMENT' });
+        console.log(store.getState());
+        
+        const render = () => {
+            document.body.innerText = store.getState();
+        };
+        store.subscribe(render);
+        render();
+
+        document.addEventListener('click', () => {
+            store.dispatch({ type: 'INCREMENT' });
+        });
+
+    </script>
+</body>
+</html>
