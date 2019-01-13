@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './BurgerIngridient.css';
 import PropTypes from 'prop-types';
 
-class BurgerIngredient {
+class BurgerIngredient extends Component {
     // which ingridient to render by props
     render() {
         let ingredient = null;
@@ -35,7 +35,7 @@ class BurgerIngredient {
                 break;
         }
         return (
-            { ingredient }
+            ingredient
         );
     }
 }
