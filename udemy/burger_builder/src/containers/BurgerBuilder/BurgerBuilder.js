@@ -14,9 +14,6 @@ import * as actions from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
     state = {
-        // ingredients: null, // redux case
-        // totalPrice: 4, // redux case
-        // purchasable: false,
         purchasing: false,
     }
 
@@ -36,57 +33,19 @@ class BurgerBuilder extends Component {
         ).reduce((sum, el) => {
             return sum + el; // el is the number
         }, 0);
-        // this.setState({
-        //     purchasable: sum > 0
-        // });
  
         return sum > 0;
-
     }
 
-    // addIngredientHandler = (type) => {
-    //     const oldCount = this.state.ingredients[type];
-    //     const updatedCount = oldCount + 1;
-    //     let updatedIngredients = { // deep copy of the state === immutability
-    //         ...this.state.ingredients
-    //     };
-    //     updatedIngredients[type] = updatedCount;
-    //     const priceAddition = INGREDIENT_PRICES[type];
-    //     const oldPrice = this.state.totalPrice;
-    //     const newPrice = priceAddition + oldPrice;
-
-    //     this.setState({
-    //         totalPrice: newPrice,
-    //         ingredients: updatedIngredients
-    //     });
-    //     this.updatePerchaseState(updatedIngredients);
-    // }
-
-    // removeIngredientHandler = (type) => {
-    //     const oldCount = this.state.ingredients[type];
-    //     if (oldCount <= 0) {
-    //         return;
-    //     }
-    //     const updatedCount = oldCount - 1;
-    //     let updatedIngredients = { // deep copy of the state === immutability
-    //         ...this.state.ingredients
-    //     };
-    //     updatedIngredients[type] = updatedCount;
-    //     const priceDeduction = INGREDIENT_PRICES[type];
-    //     const oldPrice = this.state.totalPrice;
-    //     const newPrice = oldPrice - priceDeduction;
-
-    //     this.setState({
-    //         totalPrice: newPrice,
-    //         ingredients: updatedIngredients
-    //     });
-    //     this.updatePerchaseState(updatedIngredients);
-    // }
-
     purchaseHandler() {
-        this.setState({
-            purchasing: true
-        })
+        if (this.props.isAuthenticated) {
+            this.setState({
+                purchasing: true
+            })
+        } else {
+            this.props.onSetAuthReredirectPath('/checkout');
+            this.props.history.push('/auth');
+        }
     }
 
     purchaseCancelHandler = () => {
@@ -122,13 +81,14 @@ class BurgerBuilder extends Component {
                         disabled={disabledInfo}
                         purchasable={this.updatePerchaseState(this.props.ings)}
                         price={this.props.price}
+                        isAuth={this.props.isAuthenticated}
                     />
                 </Aux>);
                 orderSummary = <OrderSummary
-                price={this.props.price}
-                purchaseCancelled={this.purchaseCancelHandler}
-                purchaseContinued={this.purchaseContinueHandler}
-                ingredients={this.props.ings} />;
+                    price={this.props.price}
+                    purchaseCancelled={this.purchaseCancelHandler}
+                    purchaseContinued={this.purchaseContinueHandler}
+                    ingredients={this.props.ings} />;
         }
 
         return (
@@ -146,7 +106,8 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        isAuthenticated: state.auth.token !== null
     };
 }
 
@@ -155,7 +116,8 @@ const mapDispatchToProps = dispatch => {
         onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
         onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
         onInitIngredients: () => dispatch(actions.initIngredients()),
-        onInitPurchase: () => dispatch(actions.purchaseInit())
+        onInitPurchase: () => dispatch(actions.purchaseInit()),
+        onSetAuthReredirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     };
 }
 
