@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from '../../axios-orders';
+// import axios from '../../axios-orders';
 
 export const addIngredient = (name) => {
     return {
@@ -30,13 +30,7 @@ export const fetchIngredientsFailed = () => {
 
 // async one
 export const initIngredients = () => {
-    return dispatch => {
-        axios.get('https://burger-builder-77c13.firebaseio.com/ingredients.json')
-            .then(response => {
-                dispatch(setIngredients(response.data));
-            })
-            .catch(error => {
-                dispatch(fetchIngredientsFailed());
-            });
+    return {
+        type: actionTypes.INIT_INGREDIENTS
     }
 };
