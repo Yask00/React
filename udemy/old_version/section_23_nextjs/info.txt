@@ -1,8 +1,0 @@
-npm run dev
-
-"build": "next build", // to build for deployment
-
-NEXTJS is framework for server side react app rendering
-
-deploy entire project folder, on server which works with nodejs
-an then run npm start
