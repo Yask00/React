@@ -4,14 +4,24 @@ import { Link } from 'react-router-dom'
 import { PostAuthor } from './PostAuthor'
 import { TimeAgo } from './TimeAgo'
 import { ReactionButtons } from './ReactionButtons'
-import { fetchPosts, selectAllPosts, selectPostsStatus, selectPostsError, Post } from './postsSlice'
+
+import {
+  fetchPosts,
+  selectPostById,
+  selectPostIds,
+  selectPostsStatus,
+  selectPostsError
+} from './postsSlice'
 import { Spinner } from '@/components/Spinner'
+import { useSelector } from 'react-redux'
 
 interface PostExcerptProps {
-  post: Post
+  postId: string
 }
 
-let PostExcerpt = ({ post }: PostExcerptProps) => {
+const PostExcerpt = ({ postId }: PostExcerptProps) => {
+  const post = useAppSelector(state => selectPostById(state, postId));
+
   return (
     <article className="post-excerpt" key={post.id}>
       <h3>
@@ -25,7 +35,8 @@ let PostExcerpt = ({ post }: PostExcerptProps) => {
       <ReactionButtons post={post} />
     </article>
   )
-}
+};
+
 // NOT WORKING
 // PostExcerpt = React.memo(PostExcerpt)
 
@@ -33,8 +44,11 @@ export const PostsList = () => {
   const dispatch = useAppDispatch()
   // Select the `state.posts` value from the store into the component
   // const posts = useAppSelector(state => state.posts);
-  const posts = useAppSelector(selectAllPosts)
-  const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+  // const posts = useAppSelector(selectAllPosts);
+  // const orderedPostIds = useSelector(selectPostIds)
+  // const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+  const orderedPostIds = useSelector(selectPostIds);
+
   const postsStatus = useAppSelector(selectPostsStatus)
   const postsError = useAppSelector(selectPostsError)
 
@@ -50,9 +64,12 @@ export const PostsList = () => {
     content = <Spinner text="Loading..." />
   } else if (postsStatus === 'succeeded') {
     // Sort posts in reverse chronological order by datetime string
-    const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+    // const orderedPosts = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
+    // content = orderedPosts.map((post) => <PostExcerpt key={post.id} post={post} />)
 
-    content = orderedPosts.map((post) => <PostExcerpt key={post.id} post={post} />)
+    content = orderedPostIds.map(postId => (
+      <PostExcerpt key={postId} postId={postId} />
+    ))
   } else if (postsStatus === 'failed') {
     content = <div>{postsError}</div>
   }

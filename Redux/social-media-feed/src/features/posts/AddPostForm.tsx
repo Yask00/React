@@ -34,7 +34,6 @@ export const AddPostForm = () => {
     const { elements } = e.currentTarget
     const title = elements.postTitle.value
     const content = elements.postContent.value
-    const userId = useAppSelector(selectCurrentUsername)! // elements.postAuthor.value
 
     // Create the post object and dispatch the `postAdded` action
     // const newPost: Post = {

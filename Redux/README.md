@@ -139,6 +139,9 @@
     const userObject = state.users.entities[userId]
     ```
     Redux Toolkit's `createEntityAdapter` API provides a standardized way to store your data in a `slice` by taking a collection of items and putting them into the shape of `{ ids: [], entities: {} }`. Along with this predefined state shape, it generates a set of reducer functions and selectors that know how to work with that data.
-* 
+* Redux Toolkit includes the `createListenerMiddleware` API to let us write logic that runs in `response` to specific `actions` being `dispatched`.
+    * `listenerMiddleware.middleware`: the actual Redux middleware instance that needs to be added to the store
+    * `listenerMiddleware.startListening`: adds a new listener entry to the middleware directly
+    * `listenerMiddleware.addListener`: an action creator that can be dispatched to add a listener entry from anywhere in the codebase that has access to dispatch, even if you didn't import the listenerMiddleware object
 * 
 * 
