@@ -6,6 +6,7 @@ import { selectCurrentUser } from '@/features/users/usersSlice'
 import { selectCurrentUsername } from '../auth/authSlice';
 import { addNewPost } from './postsSlice';
 import { PostAuthor } from './PostAuthor';
+import { useAddNewPostMutation } from '@/features/api/apiSlice'
 
 // TS types for the input fields
 // See: https://epicreact.dev/how-to-type-a-react-form-on-submit-handler/
@@ -25,6 +26,7 @@ export const AddPostForm = () => {
 
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectCurrentUsername)!
+  const [addNewPost, { isLoading }] = useAddNewPostMutation()
 
 
   const handleSubmit = async (e: React.FormEvent<AddPostFormElements>) => {
@@ -47,9 +49,10 @@ export const AddPostForm = () => {
     try {
       setAddRequestStatus('pending');
       // Redux Toolkit adds a .unwrap() function to the returned Promise, which will return a new Promise that either has the actual action.payload value from a fulfilled action
-      await dispatch(addNewPost({ title, content, user: userId  })).unwrap()
+      // await dispatch(addNewPost({ title, content, user: userId  })).unwrap()
+      await addNewPost({ title, content, user: userId }).unwrap()
       // form.reset();
-      e.currentTarget.reset();
+      form.reset();
     } catch (err) {
       console.error('Failed to save the post: ', err)
     } finally {
@@ -85,7 +88,7 @@ export const AddPostForm = () => {
           defaultValue=""
           required
         />
-        <button>Save Post</button>
+        <button disabled={isLoading}>Save Post</button>
       </form>
     </section>
   )

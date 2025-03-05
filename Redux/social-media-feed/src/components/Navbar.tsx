@@ -27,7 +27,7 @@ export const Navbar = () => {
     }
 
     const fetchNewNotifications = () => {
-      dispatch(fetchNotifications());
+      dispatch(fetchNotifications()); // dispatch thunk function that later hits the redcer
     }
 
     let unreadNotificationsBadge: React.ReactNode | undefined

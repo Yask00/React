@@ -29,7 +29,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    // !! Acommented bacause of extra reducers
+    // !! Commented bacause of extra reducers
     // userLoggedIn(state, action: PayloadAction<string>) {
     //   state.username = action.payload
     // },

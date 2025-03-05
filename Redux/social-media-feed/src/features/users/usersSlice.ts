@@ -12,6 +12,10 @@ interface User {
 const usersAdapter = createEntityAdapter<User>()
 
 // const initialState: User[] = [];
+
+// By default, `createEntityAdapter` gives you `{ ids: [], entities: {} }`.
+// If you want to track 'loading' or other keys, you would initialize them here:
+// `getInitialState({ loading: false, activeRequestId: null })
 const initialState = usersAdapter.getInitialState()
 
 

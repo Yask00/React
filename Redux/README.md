@@ -21,7 +21,7 @@
         * `Dev-mode middleware` was added to catch accidental mutations
         * The `Redux DevTools` Extension was automatically set up
         * The middleware and DevTools enhancers were composed together and added to the store
-    * `createSlice` lets you write reducers that use the Immer library to enable writing immutable updates using "mutating" JS syntax like state.value = 123, with no spreads needed. It also automatically generates action creator functions for each reducer, and generates action type strings internally based on your reducer's names. Finally, it works great with TypeScript.
+    * `createSlice` lets you write reducers that use the Immer library to enable writing immutable updates using "mutating" JS syntax like state.value = 123, with no spreads needed. It also automatically generates `action creator functions` for each reducer, and generates `action type strings` internally based on your reducer's names. Finally, it works great with TypeScript.
 * Redux Toolkit's `createSlice` and `createReducer` APIs use `Immer` inside to allow us to write "`mutating`" update logic that becomes correct immutable updates.
 * We can `read` data from the store with `useSelector`, and `dispatch` actions using `useDispatch`.
 * Put a React-Redux `<Provider>` component around your `<App />`: `<Provider store={store}>`
@@ -143,5 +143,10 @@
     * `listenerMiddleware.middleware`: the actual Redux middleware instance that needs to be added to the store
     * `listenerMiddleware.startListening`: adds a new listener entry to the middleware directly
     * `listenerMiddleware.addListener`: an action creator that can be dispatched to add a listener entry from anywhere in the codebase that has access to dispatch, even if you didn't import the listenerMiddleware object
+* For Redux specifically, "`thunks`" are a pattern of writing functions with logic inside that can interact with a Redux store's dispatch and getState methods.
+* Redux Toolkit's `RTK Query` data fetching API is a purpose built data fetching and caching solution for Redux apps, and can `eliminate` the need to write any `thunks` or `reducers` to manage `data fetching`. 
+* Redux Toolkit does not currently provide any special APIs or syntax for writing `thunk` functions. In particular, they `cannot` be defined as part of a `createSlice()` call. You have to write them `separate` from the reducer logic, exactly the same as with plain Redux code. Thunks typically dispatch plain actions, such as `dispatch(dataLoaded(response.data))`. `createAsyncThunk` abstracts this pattern by generating the action types and action creators and generating a thunk that dispatches those actions.
+
+
 * 
 * 

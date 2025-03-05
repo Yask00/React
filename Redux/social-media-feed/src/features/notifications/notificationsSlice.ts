@@ -39,7 +39,7 @@ export const fetchNotifications = createAppAsyncThunk(
 );
 
 const notificationsAdapter = createEntityAdapter<ClientNotification>({
-  // Sort with newest first
+  // Sort with newest first - createEntityAdapter provides a sortComparer argument that you can leverage to sort the collection of ids in state.
   sortComparer: (a, b) => b.date.localeCompare(a.date)
 })
 
