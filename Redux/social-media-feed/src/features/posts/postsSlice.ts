@@ -170,7 +170,7 @@ const postsSlice = createSlice({
   },
 })
 
-// Export the auto-generated action creator with the same name
+// Export the auto-generated !! action creator with the same name
 export const { /*postAdded,*/ postUpdated, reactionAdded } = postsSlice.actions
 
 export default postsSlice.reducer
