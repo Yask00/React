@@ -191,4 +191,16 @@ useEffect(() => {
 
 
 
-
+* Lifecycle
+  * `Mount` - first created and inserted into the DOM.The mounting phase has three main lifecycle methods that are called in order:
+    * The `constructor()` method is called when the component is first created. You use it to initialize the component's state and bind methods to the component's instance.
+    * The `render()` method is responsible for generating the component's virtual DOM representation based on its current props and state. 
+    * During the mounting phase, `getDerivedStateFromProps()` is called after the constructor and before render(). This method is called for every render cycle and provides an opportunity to update the component's state based on changes in props before the initial render.
+    * The `componentDidMount()` method is called once the component has been mounted into the DOM.
+  * `Update` - component's state or props change
+    * The `shouldComponentUpdate()` method is called before a component is updated. It takes two arguments: nextProps and nextState. 
+    * `componentWillUpdate()` is a lifecycle method in React that gets called just before a component's update cycle starts. 
+    * The `componentDidUpdate()` method is a lifecycle method in React that is called after a component has been updated and re-rendered.
+  * `Unmount` - removed from the DOM
+    * `componentWillUnmount()`: This method is called just before the component is removed from the DOM. It allows you to perform any necessary cleanup
+* An `error boundary` is a React-specific feature that wraps a component and prevents any errors from spreading to other parts of the application and crashing it.
